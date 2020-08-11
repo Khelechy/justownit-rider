@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="justownitRiders.GeneralDevicesStyle">
+    <OnIdiom  x:TypeArguments="x:Double" Tablet="30" Phone="20" x:Key="PageSpacing" />
+    <OnIdiom  x:TypeArguments="Thickness" Tablet="30" Phone="20" x:Key="PagePadding" />
+
+    <Style TargetType="Button" x:Key="MainButtonStyle">
+        <Setter Property="HeightRequest">
+            <Setter.Value>
+                <OnIdiom x:TypeArguments="x:Double" Phone="50" Tablet="60"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontSize">
+            <Setter.Value>
+                <OnIdiom x:TypeArguments="x:Double" Phone="13" Tablet="24"/>
+            </Setter.Value>
+        </Setter>
+        <!--<Setter Property="CornerRadius" Value="12" />-->
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <!--<Setter Property="TextColor" Value="White" />-->
+        <!--<Setter Property="BackgroundColor" Value="{StaticResource Primary}" />-->
+    </Style>
+
+    <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="Wheat"></Setter>
+        <Setter Property="BarTextColor" Value="#a53a4c"></Setter>
+    </Style>
+
+    <Style TargetType="Entry" x:Key="MainEntryStyle">
+        <!--<Setter Property="HeightRequest">
+            <Setter.Value>
+                <OnIdiom x:TypeArguments="x:Double" Phone="50" Tablet="60"/>
+            </Setter.Value>
+        </Setter>-->
+        <Setter Property="FontSize">
+            <Setter.Value>
+                <OnIdiom x:TypeArguments="x:Double" Phone="13" Tablet="25"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <!--<Setter Property="TextColor" Value="{StaticResource Primary}"/>-->
+        <!--<Setter Property="PlaceholderColor" Value="Gray" />-->
+    </Style>
+
+    <Style TargetType="Label" x:Key="MainTitleStyle">
+        <Setter Property="FontSize">
+            <Setter.Value>
+                <OnIdiom x:TypeArguments="x:Double" Phone="17" Tablet="25"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="NormalTitleStyle">
+        <Setter Property="FontSize">
+            <Setter.Value>
+                <OnIdiom x:TypeArguments="x:Double" Phone="13" Tablet="20"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:vm="clr-namespace:justownitRiders.ViewModels"
+             mc:Ignorable="d"
+             x:Class="justownitRiders.Views.AccountPersonalView">
+    <NavigationPage.TitleView>
+        <Label Text="Edit Profile" FontFamily="VarelaRound-Regular.otf#VarelaRound"  Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start" FontSize="18"/>
+    </NavigationPage.TitleView>
+    <ContentPage.BindingContext>
+        <vm:AccountPersonalViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView Padding="15">
+            <Grid RowSpacing="30" Margin="0,30,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackLayout>
+                        <Label Text="First Name" FontFamily="VarelaRound-Regular.otf#VarelaRound"  Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start"/>
+                        <Entry Placeholder="First Name"
+                                BackgroundColor="Transparent"
+                                Text="{Binding FirstName}"
+                                Style="{StaticResource MainEntryStyle}"
+                                PlaceholderColor="Black"
+                                FontAttributes="Bold"
+                                FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                                Visual="Material"/>
+                    </StackLayout>
+                    <forms:CachedImage Source="edit" HeightRequest="25" WidthRequest="25" HorizontalOptions="EndAndExpand" VerticalOptions="End" Margin="0,0,0,10"/>
+                </Grid>
+                <Grid  Grid.Row="1">
+                    <StackLayout>
+                        <Label Text="Last Name" FontFamily="VarelaRound-Regular.otf#VarelaRound"  Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start"/>
+                        <Entry Placeholder="First Name"
+                                   BackgroundColor="Transparent"
+                                   Text="{Binding LastName}"
+                                   Style="{StaticResource MainEntryStyle}"
+                                   PlaceholderColor="Black"
+                                   FontAttributes="Bold"
+                                   FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                                   Visual="Material"/>
+                    </StackLayout>
+                    <forms:CachedImage Source="edit" HeightRequest="25" WidthRequest="25" HorizontalOptions="EndAndExpand" VerticalOptions="End" Margin="0,0,0,10"/>
+                </Grid>
+                <StackLayout  Grid.Row="2">
+                    <Label Text="Email" FontFamily="VarelaRound-Regular.otf#VarelaRound" Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Email}" FontFamily="VarelaRound-Regular.otf#VarelaRound"  Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start" TextColor="Black"/>
+                </StackLayout>
+                <Grid  Grid.Row="3">
+                    <StackLayout>
+                        <Label Text="Phone Number" FontFamily="VarelaRound-Regular.otf#VarelaRound" Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start"/>
+                        <Entry Placeholder="Phone Number"
+                                BackgroundColor="Transparent"
+                                Text="{Binding PhoneNumber}"
+                                Style="{StaticResource MainEntryStyle}"
+                                PlaceholderColor="Black"
+                                FontAttributes="Bold"
+                                FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                                Visual="Material"/>
+                    </StackLayout>
+                    <forms:CachedImage Source="edit" HeightRequest="25" WidthRequest="25" HorizontalOptions="EndAndExpand" VerticalOptions="End" Margin="0,0,0,10"/>
+                </Grid >
+                <Button Grid.Row="4"
+                Margin="0,50,0,0"
+                Text="Update Details"
+                FontSize="13"
+                Command="{Binding UpdateCommand}"
+                TextColor="White"
+                FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                Style="{StaticResource MainButtonStyle}"
+                BackgroundColor="#a53a4c"/>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

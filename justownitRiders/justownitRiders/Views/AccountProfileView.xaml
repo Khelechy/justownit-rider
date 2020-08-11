@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             mc:Ignorable="d"
+             x:Class="justownitRiders.Views.AccountProfileView">
+    <ContentPage.Content>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <StackLayout Padding="15" Margin="0,50,0,0">
+                <Label Text="Your Profile" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Black"/>
+                <!--MAIN BODY-->
+                <Grid RowSpacing="30" Margin="0,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Frame Grid.Row="0" CornerRadius="3" Visual="Material" OutlineColor="#dcdbdd">
+                        <Grid ColumnSpacing="30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <forms:CachedImage Source="ouser" Grid.Row="0" Grid.Column="0" HeightRequest="30" WidthRequest="30"/>
+                            <StackLayout Grid.Row="0" Grid.Column="1">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ToPersonal_Tapped" NumberOfTapsRequired="1"/>
+                                </StackLayout.GestureRecognizers>
+                                <Label Text="Personal Details" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Black"/>
+                                <Label Text="Edit your personal details" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13"/>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                    <!--<Frame Grid.Row="1" CornerRadius="3" Visual="Material" OutlineColor="#dcdbdd">
+                        <Grid ColumnSpacing="30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <forms:CachedImage Source="amarker" Grid.Row="0" Grid.Column="0" HeightRequest="30" WidthRequest="30"/>
+                            <StackLayout Grid.Row="0" Grid.Column="1">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ToContact_Tapped" NumberOfTapsRequired="1"/>
+                                </StackLayout.GestureRecognizers>
+                                <Label Text="Contact Information" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Black"/>
+                                <Label Text="Edit your contavt details" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13"/>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>-->
+                    <Frame Grid.Row="1" CornerRadius="3" Visual="Material" OutlineColor="#dcdbdd">
+                        <Grid ColumnSpacing="30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <forms:CachedImage Source="apadlock" Grid.Row="0" Grid.Column="0" HeightRequest="30" WidthRequest="30"/>
+                            <StackLayout Grid.Row="0" Grid.Column="1">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ToSecurity_Tapped" NumberOfTapsRequired="1"/>
+                                </StackLayout.GestureRecognizers>
+                                <Label Text="Security Details" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Black"/>
+                                <Label Text="Edit your security details" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13"/>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Row="2" CornerRadius="3" Visual="Material" OutlineColor="#dcdbdd">
+                        <Grid ColumnSpacing="30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <forms:CachedImage Source="oexit" Grid.Row="0" Grid.Column="0" HeightRequest="30" WidthRequest="30"/>
+                            <StackLayout Grid.Row="0" Grid.Column="1">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ToLogout_Tapped" NumberOfTapsRequired="1"/>
+                                </StackLayout.GestureRecognizers>
+                                <Label Text="Logout" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Black"/>
+                                <Label Text="Logout of your account" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13"/>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

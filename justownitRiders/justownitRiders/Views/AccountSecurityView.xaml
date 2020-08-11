@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:justownitRiders.ViewModels"
+             mc:Ignorable="d"
+             x:Class="justownitRiders.Views.AccountSecurityView">
+    <NavigationPage.TitleView>
+        <Label Text="Change Password" FontFamily="VarelaRound-Regular.otf#VarelaRound"  Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start" FontSize="18"/>
+    </NavigationPage.TitleView>
+    <ContentPage.BindingContext>
+        <vm:AccountSecurityViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView Padding="15">
+            <Grid RowSpacing="50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Entry Grid.Row="0" Placeholder="Old Password"
+                        BackgroundColor="Transparent"
+                        Text="{Binding OldPassword}"
+                        Style="{StaticResource MainEntryStyle}"
+                        PlaceholderColor="Black"
+                        FontAttributes="Bold"
+                        IsPassword="True"
+                        FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                        HorizontalOptions="FillAndExpand"
+                        Visual="Material"/>
+                <Entry Grid.Row="1" Placeholder="New Password"
+                        FontAttributes="Bold"
+                        Text="{Binding NewPassword}"
+                        Style="{StaticResource MainEntryStyle}"
+                        BackgroundColor="Transparent"
+                        IsPassword="True"
+                        FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                        HorizontalOptions="FillAndExpand"
+                        Visual="Material"/>
+                <Button Grid.Row="2"
+                    Margin="0,20,0,0"
+                    Text="Change password"
+                    Command="{Binding ChangePasswordCommand}"
+                    TextColor="White"
+                    FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                    Style="{StaticResource MainButtonStyle}"
+                    BackgroundColor="#a53a4c"/>
+            </Grid>
+            
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

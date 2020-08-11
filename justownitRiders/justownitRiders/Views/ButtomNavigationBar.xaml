@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="justownitRiders.Views.ButtomNavigationBar"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core" xmlns:views="clr-namespace:justownitRiders.Views"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+             android:TabbedPage.IsSwipePagingEnabled="False"
+             BarBackgroundColor="White"
+            UnselectedTabColor="#a53a4c"
+             BarTextColor="#a53a4c"
+             SelectedTabColor="#fa921f">
+    <TabbedPage.Children>
+        <NavigationPage IconImageSource="home">
+            <x:Arguments>
+                <views:AccountHomeView/>
+            </x:Arguments>
+        </NavigationPage>
+        <NavigationPage IconImageSource="explore">
+            <x:Arguments>
+                <views:AccountHistoryView/>
+            </x:Arguments>
+        </NavigationPage>
+        <NavigationPage IconImageSource="account">
+            <x:Arguments>
+                <views:AccountProfileView/>
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+</TabbedPage>
