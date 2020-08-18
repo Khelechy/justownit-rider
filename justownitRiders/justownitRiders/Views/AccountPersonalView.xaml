@@ -38,7 +38,7 @@
                 <Grid  Grid.Row="1">
                     <StackLayout>
                         <Label Text="Last Name" FontFamily="VarelaRound-Regular.otf#VarelaRound"  Style="{StaticResource NormalTitleStyle}" HorizontalOptions="Start"/>
-                        <Entry Placeholder="First Name"
+                        <Entry Placeholder="Last Name"
                                    BackgroundColor="Transparent"
                                    Text="{Binding LastName}"
                                    Style="{StaticResource MainEntryStyle}"

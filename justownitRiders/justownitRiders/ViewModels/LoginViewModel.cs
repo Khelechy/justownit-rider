@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using justownitRiders.Managers;
+using justownitRiders.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -69,6 +70,7 @@ namespace justownitRiders.ViewModels
 				var loginResponseTuple = await manager.Login(email, password);
 				var loginResponse = loginResponseTuple.Item1;
 				string error = loginResponseTuple.Item2;
+				var loginRp = loginResponseTuple.Item3;
 				if (!string.IsNullOrWhiteSpace(error))
 				{
 					UserDialogs.Instance.HideLoading();
@@ -83,18 +85,40 @@ namespace justownitRiders.ViewModels
 				}
 				else if (loginResponse.status == 200)
 				{
-					try
+					if (loginRp.Contains("dispatch_rider"))
 					{
-						await SecureStorage.SetAsync("LoginEmail", email);
-						manager.ExtractUserDetails();
+						try
+						{
+							await SecureStorage.SetAsync("LoginEmail", email);
+							manager.ExtractUserDetails();
+						}
+						catch (Exception ex)
+						{
+							//nothing
+						}
+
+						await App.Current.MainPage.Navigation.PushAsync(new ButtomNavigationBar(), true);
+						UserDialogs.Instance.HideLoading();
 					}
-					catch (Exception ex)
+					else
 					{
-						//nothing
+						UserDialogs.Instance.HideLoading();
+						await App.Current.MainPage.DisplayAlert("Login Error", "You dont have access on this platform, register on this platform", "OK");
 					}
 
+					//try
+					//{
+					//	await SecureStorage.SetAsync("LoginEmail", email);
+					//	manager.ExtractUserDetails();
+					//}
+					//catch (Exception ex)
+					//{
+					//	//nothing
+					//}
+
 					//await App.Current.MainPage.Navigation.PushAsync(new ButtomNavigationBar(), true);
-					UserDialogs.Instance.HideLoading();
+					//UserDialogs.Instance.HideLoading();
+
 				}
 				else if (loginResponse.status == 401)
 				{
@@ -117,7 +141,7 @@ namespace justownitRiders.ViewModels
 			loginEmail = await SecureStorage.GetAsync("LoginEmail");
 			if (loginEmail == null)
 			{
-				loginEmail = "Username";
+				loginEmail = "";
 			}
 			else
 			{

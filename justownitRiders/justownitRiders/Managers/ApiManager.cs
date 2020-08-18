@@ -32,7 +32,7 @@ namespace justownitRiders.Managers
 			}
 		}
 
-		public async Task<Tuple<LoginResponse, string>> Login(string Email, string Password)
+		public async Task<Tuple<LoginResponse, string, string>> Login(string Email, string Password)
 		{
 			string error = "";
 			try
@@ -54,6 +54,7 @@ namespace justownitRiders.Managers
 
 				//Call API
 				var response = await client.ExecuteAsync<LoginResponse>(request);
+				var rp = await client.ExecuteAsync(request);
 
 				//Extract errors
 				error = RestServiceManager.ExtractError(response.Content, response.StatusCode);
@@ -85,7 +86,7 @@ namespace justownitRiders.Managers
 
 				}
 
-				return new Tuple<LoginResponse, string>(response.Data, error);
+				return new Tuple<LoginResponse, string, string>(response.Data, error, rp.Content);
 			}
 			catch (Exception ex)
 			{
@@ -120,6 +121,31 @@ namespace justownitRiders.Managers
 			}
 		}
 
+		public async Task<Tuple<string, string, int>> GetRiderHistoryDeliverables()
+		{
+			string error = "";
+			int statusCode = 0;
+			try
+			{
+				var client = new RestClient(AppConfig.BaseURL);
+
+				var request = new RestRequest("/requests/riders/completed-deliveries", Method.GET);
+				request.AddHeader("Authorization", "Bearer " + UserDetails.token);
+
+				//Call API
+				var response = await client.ExecuteAsync(request);
+				error = RestServiceManager.ExtractError(response.Content, response.StatusCode);
+				statusCode = (int)response.StatusCode;
+
+				return new Tuple<string, string, int>(response.Content, error, statusCode);
+			}
+			catch (Exception ex)
+			{
+				error = "Cant Load Data";
+				return null;
+			}
+		}
+
 		public async Task<Tuple<AcceptDeliveryResponse, string>> AcceptDelivery(int request_id)
 		{
 			string error = "";
@@ -128,7 +154,7 @@ namespace justownitRiders.Managers
 
 				var client = new RestClient(AppConfig.BaseURL);
 
-				var request = new RestRequest("request/" + request_id + "/accept", Method.PATCH);
+				var request = new RestRequest("requests/" + request_id + "/accept", Method.PATCH);
 				request.AddHeader("Authorization", "Bearer " + UserDetails.token);
 
 
@@ -159,7 +185,7 @@ namespace justownitRiders.Managers
 
 				var client = new RestClient(AppConfig.BaseURL);
 
-				var request = new RestRequest("request/" + request_id + "/mark-delivered", Method.PATCH);
+				var request = new RestRequest("requests/" + request_id + "/mark-delivered", Method.PATCH);
 				request.AddHeader("Authorization", "Bearer " + UserDetails.token);
 
 

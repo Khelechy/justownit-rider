@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:vm="clr-namespace:justownitRiders.ViewModels"
+             mc:Ignorable="d"
+             x:Class="justownitRiders.Views.LoginView">
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <Grid Padding="25" RowSpacing="10">
+               
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <StackLayout Grid.Row="0">
+                    <forms:CachedImage  Source="justlogo" WidthRequest="100" HeightRequest="130" HorizontalOptions="Center"/>
+                    <Grid HorizontalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="Riders...." Style="{StaticResource NormalTitleStyle}" FontFamily="VarelaRound-Regular.otf#VarelaRound" FontSize="25" TextColor="Black"  HorizontalOptions="Center" VerticalOptions="End"/>
+                        <forms:CachedImage Grid.Column="1"  Source="bike" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"  VerticalOptions="Center"/>
+                    </Grid>
+                    
+                </StackLayout>
+                <!--BODY FOR LOGIN-->
+                <StackLayout Grid.Row="1" Spacing="30" VerticalOptions="Center">
+                    <Entry Placeholder="Username"
+                            BackgroundColor="Transparent"
+                            Text="{Binding Email}"
+                            Style="{StaticResource MainEntryStyle}"
+                        PlaceholderColor="Black"
+                           Keyboard="Email"
+                        FontAttributes="Bold"
+                        FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                        HorizontalOptions="FillAndExpand"
+                        Visual="Material"/>
+                    <Entry Placeholder="Password"
+                        FontAttributes="Bold"
+                            Text="{Binding Password}"
+                            Style="{StaticResource MainEntryStyle}"
+                            BackgroundColor="Transparent"
+                            IsPassword="True"
+                        FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                        HorizontalOptions="FillAndExpand"
+                        Visual="Material"/>
+                </StackLayout>
+                <!--BODY FOR LOGIN BUTTON-->
+                <StackLayout Grid.Row="2" Spacing="30" VerticalOptions="Start">
+                    <Button
+                                Text="LOGIN"
+                                FontSize="15"
+                                Command="{Binding LoginCommand}"
+                                Style="{StaticResource MainButtonStyle}"
+                                TextColor="White"
+                                FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                                BackgroundColor="#a53a4c"/>
+
+                    <!--<FlexLayout JustifyContent="SpaceBetween" Wrap="Wrap">
+                        <Label Text="Forgot Password?" Style="{StaticResource NormalTitleStyle}" FontFamily="VarelaRound-Regular.otf#VarelaRound" TextColor="Gray"  HorizontalOptions="Start">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ForgotPassword_Tapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </FlexLayout>-->
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

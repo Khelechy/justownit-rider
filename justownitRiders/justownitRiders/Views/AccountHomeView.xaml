@@ -2,9 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:justownitRiders.ViewModels"
              mc:Ignorable="d"
+             x:Name="page"
              x:Class="justownitRiders.Views.AccountHomeView">
+    <NavigationPage.TitleView>
+        <Label Text="Home" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="#a53a4c"/>
+    </NavigationPage.TitleView>
+    <ContentPage.BindingContext>
+        <vm:DeliverableRequestsViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
             <Grid Padding="20" RowSpacing="20">
@@ -13,7 +20,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Image Grid.Row="0" Source="dp" HorizontalOptions="End" WidthRequest="50" HeightRequest="50"/>
+                <!--<Image Grid.Row="0" Source="dp" HorizontalOptions="End" WidthRequest="50" HeightRequest="50"/>-->
                 <StackLayout Grid.Row="1" Spacing="20">
                     <Label Text="Dashboard" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Gray"/>
                     <Frame BackgroundColor="#fa921f" CornerRadius="7" IsClippedToBounds="True">
@@ -45,69 +52,83 @@
                     </Frame>
                 </StackLayout>
                 <StackLayout Grid.Row="2">
-                    <Label Text="Notifications" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Gray"/>
+                    <Label Text="Deliverable" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Gray"/>
                     <!--<Label Text="No Deliveries Found" FontFamily="VarelaRound-Regular.otf#VarelaRound" HorizontalOptions="CenterAndExpand"  FontSize="18" TextColor="Gray" Margin="0,20,0,0"/>-->
-                    <StackLayout Margin="0,20,0,0">
-                        <Frame CornerRadius="6">
-                            <Grid ColumnSpacing="30">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="noimage" WidthRequest="50" HeightRequest="50"/>
-                                <StackLayout Grid.Column="1">
-                                    <Label Text="Samsung Galaxy A20" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="#a53a4c"/>
-                                    <Label Text="Bethany Williams" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Gray"/>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Text="Dismiss" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="#a53a4c" VerticalOptions="End"/>
-                                        <Button
-                                            Grid.Column="1"
-                                            VerticalOptions="Start"
-											Text="Accept"
-                                            WidthRequest="80"
-                                            HorizontalOptions="End"
-											FontSize="13"
-											TextColor="White"
-											FontFamily="VarelaRound-Regular.otf#VarelaRound"
-											HeightRequest="33"
-											Style="{StaticResource MainButtonStyle}"
-											BackgroundColor="#00A8A8"/>
-                                    </Grid>
-                                </StackLayout>
-                            </Grid>
-                        </Frame>
-                    </StackLayout>
-                    <!--<CollectionView VerticalScrollBarVisibility="Always" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                        <CollectionView.Header>
-                            <Label VerticalOptions="Center" Text="You have no active request" IsVisible="{Binding Source={x:Reference page}, Path=BindingContext.IsNonFound}" FontFamily="VarelaRound-Regular.otf#VarelaRound" HorizontalOptions="CenterAndExpand"  FontSize="20" TextColor="#a53a4c"/>
-                        </CollectionView.Header>
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame CornerRadius="6" IsClippedToBounds="True">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Image Grid.Column="0" Source="padlock"/>
-                                        <StackLayout Grid.Column="1">
-                                            
-                                        </StackLayout>
-                                    </Grid>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                        <CollectionView.Footer>
-                            <BoxView WidthRequest="50" HeightRequest="10" BackgroundColor="Transparent"/>
-                        </CollectionView.Footer>
-                    </CollectionView>-->
+
+                    <RefreshView Command="{Binding RefreshDeliveriesCommand}" IsRefreshing="{Binding IsRefreshing}">
+                        <CollectionView ItemsSource="{Binding Deliveries}" VerticalScrollBarVisibility="Always" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <CollectionView.Header>
+                                <Label VerticalOptions="Center" Text="There are no deliveries to be made" IsVisible="{Binding Source={x:Reference page}, Path=BindingContext.IsNonFound}" FontFamily="VarelaRound-Regular.otf#VarelaRound" HorizontalOptions="CenterAndExpand"  FontSize="20" TextColor="#a53a4c"/>
+                            </CollectionView.Header>
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Margin="0,20,0,0">
+                                        <Frame CornerRadius="6">
+                                            <Grid x:Name="item" ColumnSpacing="30">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="{Binding device.image}" WidthRequest="50" HeightRequest="50"/>
+                                                <StackLayout Grid.Column="1" Spacing="10">
+                                                    <Label Text="{Binding device.name}" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="#a53a4c"/>
+                                                    <Label FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Gray">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="Name: "/>
+                                                                <Span Text="{Binding requester.firstname}" />
+                                                                <Span Text=" "/>
+                                                                <Span Text="{Binding requester.lastname}" />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Button
+                                                        VerticalOptions="Start"
+										                Text="Accept"
+                                                        WidthRequest="100"
+                                                        HorizontalOptions="Start"
+										                FontSize="13"
+										                TextColor="White"
+                                                        Command="{Binding Source={x:Reference page}, Path=BindingContext.AcceptDeliveryCommand}"
+                                                        CommandParameter="{Binding Source={x:Reference item}, Path=BindingContext}"
+										                FontFamily="VarelaRound-Regular.otf#VarelaRound"
+                                                        IsEnabled="{Binding Source={x:Reference page}, Path=BindingContext.CanDeliver}"
+										                HeightRequest="33"
+										                Style="{StaticResource MainButtonStyle}"
+										                BackgroundColor="#00A8A8"/>
+
+                                                        <Button
+                                                        VerticalOptions="Start"
+										                Text="Delivered"
+                                                        WidthRequest="100"
+                                                        HorizontalOptions="EndAndExpand"
+                                                        Command="{Binding Source={x:Reference page}, Path=BindingContext.MarkDeliveryCommand}"
+                                                        CommandParameter="{Binding Source={x:Reference item}, Path=BindingContext}"
+										                FontSize="13"
+										                TextColor="White"
+                                                        IsEnabled="{Binding Source={x:Reference page}, Path=BindingContext.CanMark}"
+										                FontFamily="VarelaRound-Regular.otf#VarelaRound"
+										                HeightRequest="33"
+										                Style="{StaticResource MainButtonStyle}"
+										                BackgroundColor="#00A8A8"/>
+
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </Grid>
+                                        </Frame>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.Footer>
+                                <BoxView WidthRequest="50" HeightRequest="10" BackgroundColor="Transparent"/>
+                            </CollectionView.Footer>
+                        </CollectionView>
+                    </RefreshView>
                 </StackLayout>
             </Grid>
         </ScrollView>

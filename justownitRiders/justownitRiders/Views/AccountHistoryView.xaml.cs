@@ -15,7 +15,7 @@ namespace justownitRiders.Views
 		public AccountHistoryView()
 		{
 			InitializeComponent();
-			NavigationPage.SetHasNavigationBar(this, false);
+			//NavigationPage.SetHasNavigationBar(this, false);
 		}
 	}
 }

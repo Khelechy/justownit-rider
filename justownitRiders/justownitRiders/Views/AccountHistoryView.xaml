@@ -2,14 +2,93 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:justownitRiders.ViewModels"
              mc:Ignorable="d"
+             x:Name="page"
              x:Class="justownitRiders.Views.AccountHistoryView">
+    <NavigationPage.TitleView>
+        <Label Text="History" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="#a53a4c"/>
+    </NavigationPage.TitleView>
+    <ContentPage.BindingContext>
+        <vm:AccountHistoryViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+            <Grid Padding="20" RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!--<Image Grid.Row="0" Source="dp" HorizontalOptions="End" WidthRequest="50" HeightRequest="50"/>-->
+                <StackLayout Grid.Row="1" Spacing="20">
+                    <Frame BackgroundColor="#fa921f" CornerRadius="7" IsClippedToBounds="True">
+                        <Grid Margin="0,10,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Text="Delivery History" FontFamily="VarelaRound-Regular.otf#VarelaRound" FontAttributes="Bold" FontSize="18" TextColor="White"/>
+                                <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="20">
+                                    <Label Text="10" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Black"/>
+                                    <Label Text="Deliveries made" VerticalOptions="End" TextColor="White"/>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+                <StackLayout Grid.Row="2">
+                    <Label Text="My Deliveries" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Gray"/>
+                    <RefreshView Command="{Binding RefreshHistoryCommand}" IsRefreshing="{Binding IsRefreshing}">
+                        <CollectionView ItemsSource="{Binding Deliveries}" VerticalScrollBarVisibility="Always" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <CollectionView.Header>
+                                <Label VerticalOptions="Center" Text="You have made no delivery" IsVisible="{Binding Source={x:Reference page}, Path=BindingContext.IsNonFound}" FontFamily="VarelaRound-Regular.otf#VarelaRound" HorizontalOptions="Center" HorizontalTextAlignment="Center"  FontSize="20" TextColor="#a53a4c"/>
+                            </CollectionView.Header>
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Margin="0,20,0,0">
+                                        <Frame CornerRadius="6">
+                                            <Grid ColumnSpacing="30">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="{Binding device.image}" WidthRequest="50" HeightRequest="50"/>
+                                                <StackLayout Grid.Column="1" Spacing="10">
+                                                    <Label Text="{Binding device.name}" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="#a53a4c"/>
+                                                    <Label FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Gray">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="Name: "/>
+                                                                <Span Text="{Binding requester.firstname}" />
+                                                                <Span Text=" "/>
+                                                                <Span Text="{Binding requester.lastname}" />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                    <Label Text="Delivered" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="#a53a4c"/>
+                                                </StackLayout>
+
+                                            </Grid>
+                                        </Frame>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.Footer>
+                                <BoxView WidthRequest="50" HeightRequest="10" BackgroundColor="Transparent"/>
+                            </CollectionView.Footer>
+                        </CollectionView>
+                    </RefreshView>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

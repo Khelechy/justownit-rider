@@ -10,12 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace justownitRiders.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AccountHomeView : ContentPage
+	public partial class LoginView : ContentPage
 	{
-		public AccountHomeView()
+		public LoginView()
 		{
 			InitializeComponent();
-			//NavigationPage.SetHasNavigationBar(this, false);
+			NavigationPage.SetHasNavigationBar(this, false);
 		}
 	}
 }

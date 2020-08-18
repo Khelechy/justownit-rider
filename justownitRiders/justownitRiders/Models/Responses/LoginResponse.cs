@@ -19,7 +19,7 @@ namespace justownitRiders.Models.Responses
 			public string email { get; set; }
 			public string phoneNumber { get; set; }
 			public string locationId { get; set; }
-
+			//public Role role { get; set; }
 			public Location location { set; get; }
 
 		}
@@ -28,6 +28,13 @@ namespace justownitRiders.Models.Responses
 		{
 			public string name { set; get; }
 		}
+
+		//public class Role
+		//{
+		//	public string name { get; set; }
+		//	public string[] claims { get; set; }
+		//}
+
 
 	}
 }

@@ -18,7 +18,7 @@ namespace justownitRiders
 			InitializeComponent();
 			LoadStyles();
 
-			Navigation = new NavigationPage(new ButtomNavigationBar());
+			Navigation = new NavigationPage(new LoginView());
 			Application.Current.MainPage = Navigation;
 		}
 

@@ -15,7 +15,7 @@ namespace justownitRiders.Views
 		public AccountProfileView()
 		{
 			InitializeComponent();
-			NavigationPage.SetHasNavigationBar(this, false);
+			//NavigationPage.SetHasNavigationBar(this, false);
 		}
 
 		private async void ToPersonal_Tapped(object sender, EventArgs e)
