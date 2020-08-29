@@ -34,14 +34,14 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Row="0" Text="Deliveries Made" FontFamily="VarelaRound-Regular.otf#VarelaRound" FontAttributes="Bold" FontSize="18" TextColor="White"/>
+                                <Label Grid.Row="0" Text="Available Deliveries" FontFamily="VarelaRound-Regular.otf#VarelaRound" FontAttributes="Bold" FontSize="18" TextColor="White"/>
                                 <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="20">
-                                    <Label Text="10" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Black"/>
+                                    <Label Text="{Binding AvailableDelivery}" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Black"/>
                                     <Label VerticalOptions="End" HorizontalOptions="CenterAndExpand">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="UPDATED " FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13" TextColor="#a53a4c"/>
-                                                <Span Text=" 8 mins ago" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13" TextColor="white"/>
+                                                <Span Text="AVAILABLE " FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13" TextColor="#a53a4c"/>
+                                                <Span Text=" a few seconds ago" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13" TextColor="white"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
@@ -58,7 +58,10 @@
                     <RefreshView Command="{Binding RefreshDeliveriesCommand}" IsRefreshing="{Binding IsRefreshing}">
                         <CollectionView ItemsSource="{Binding Deliveries}" VerticalScrollBarVisibility="Always" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                             <CollectionView.Header>
-                                <Label VerticalOptions="Center" Text="There are no deliveries to be made" IsVisible="{Binding Source={x:Reference page}, Path=BindingContext.IsNonFound}" FontFamily="VarelaRound-Regular.otf#VarelaRound" HorizontalOptions="CenterAndExpand"  FontSize="20" TextColor="#a53a4c"/>
+                                <StackLayout>
+                                    <Label VerticalOptions="Center" Text="There are no deliveries to be made" IsVisible="{Binding Source={x:Reference page}, Path=BindingContext.IsNonFound}" FontFamily="VarelaRound-Regular.otf#VarelaRound" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="20" TextColor="#a53a4c"/>
+                                    <Label VerticalOptions="Center" Text="Pull to refresh" IsVisible="{Binding Source={x:Reference page}, Path=BindingContext.IsNonFound}" FontFamily="VarelaRound-Regular.otf#VarelaRound" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="20" TextColor="#a53a4c"/>
+                                </StackLayout>
                             </CollectionView.Header>
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
@@ -72,16 +75,16 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Image Grid.Column="0" Source="{Binding device.image}" WidthRequest="50" HeightRequest="50"/>
+                                                <Image Grid.Column="0" Source="{Binding ridersRequestModel.device.image}" WidthRequest="50" HeightRequest="50"/>
                                                 <StackLayout Grid.Column="1" Spacing="10">
-                                                    <Label Text="{Binding device.name}" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="#a53a4c"/>
+                                                    <Label Text="{Binding ridersRequestModel.device.name}" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="#a53a4c"/>
                                                     <Label FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="15" TextColor="Gray">
                                                         <Label.FormattedText>
                                                             <FormattedString>
                                                                 <Span Text="Name: "/>
-                                                                <Span Text="{Binding requester.firstname}" />
+                                                                <Span Text="{Binding ridersRequestModel.requester.firstname}" />
                                                                 <Span Text=" "/>
-                                                                <Span Text="{Binding requester.lastname}" />
+                                                                <Span Text="{Binding ridersRequestModel.requester.lastname}" />
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>
@@ -97,7 +100,7 @@
                                                         Command="{Binding Source={x:Reference page}, Path=BindingContext.AcceptDeliveryCommand}"
                                                         CommandParameter="{Binding Source={x:Reference item}, Path=BindingContext}"
 										                FontFamily="VarelaRound-Regular.otf#VarelaRound"
-                                                        IsEnabled="{Binding Source={x:Reference page}, Path=BindingContext.CanDeliver}"
+                                                        IsVisible="{Binding canAccept}"
 										                HeightRequest="33"
 										                Style="{StaticResource MainButtonStyle}"
 										                BackgroundColor="#00A8A8"/>
@@ -111,7 +114,7 @@
                                                         CommandParameter="{Binding Source={x:Reference item}, Path=BindingContext}"
 										                FontSize="13"
 										                TextColor="White"
-                                                        IsEnabled="{Binding Source={x:Reference page}, Path=BindingContext.CanMark}"
+                                                        IsVisible="{Binding canDeliver}"
 										                FontFamily="VarelaRound-Regular.otf#VarelaRound"
 										                HeightRequest="33"
 										                Style="{StaticResource MainButtonStyle}"

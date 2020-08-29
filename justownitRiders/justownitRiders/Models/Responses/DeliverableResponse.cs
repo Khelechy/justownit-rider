@@ -1,4 +1,5 @@
-﻿using System;
+﻿using justownitRiders.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -32,6 +33,7 @@ namespace justownitRiders.Models.Responses
 			public string status { get; set; }
 			public string dispatchType { get; set; }
 			public string dispatchStatus { get; set; }
+
 			public float amount { get; set; }
 			public string TDSalesId { get; set; }
 			public string deviceId { get; set; }
@@ -39,6 +41,8 @@ namespace justownitRiders.Models.Responses
 			public DateTime createdAt { get; set; }
 			public Requester requester { get; set; }
 			public Device device { get; set; }
+
+			
 		}
 
 		public class Requester
@@ -55,7 +59,7 @@ namespace justownitRiders.Models.Responses
 			public string name { get; set; }
 			public string description { get; set; }
 			public string image { get; set; }
-			public int price { get; set; }
+			public float price { get; set; }
 			public int quantity { get; set; }
 			public Location location { get; set; }
 

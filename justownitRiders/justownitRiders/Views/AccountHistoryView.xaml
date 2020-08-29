@@ -35,8 +35,8 @@
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" Text="Delivery History" FontFamily="VarelaRound-Regular.otf#VarelaRound" FontAttributes="Bold" FontSize="18" TextColor="White"/>
                                 <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="20">
-                                    <Label Text="10" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Black"/>
-                                    <Label Text="Deliveries made" VerticalOptions="End" TextColor="White"/>
+                                    <Label Text="{Binding AvailableDelivery}" FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="18" TextColor="Black"/>
+                                    <Label Text="Deliveries made" VerticalOptions="End"  FontFamily="VarelaRound-Regular.otf#VarelaRound"  FontSize="13"  TextColor="White"/>
                                 </StackLayout>
                             </Grid>
                         </Grid>

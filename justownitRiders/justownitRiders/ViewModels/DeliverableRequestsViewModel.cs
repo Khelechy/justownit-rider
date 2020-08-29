@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -25,8 +26,8 @@ namespace justownitRiders.ViewModels
 		{
 			Deliveries = await GetDeliverableRequest();
 		}
-		private ObservableCollection<RiderDeliveryRequestsResponse> deliveries;
-		public ObservableCollection<RiderDeliveryRequestsResponse> Deliveries
+		private ObservableCollection<Test> deliveries;
+		public ObservableCollection<Test> Deliveries
 		{
 			get { return deliveries; }
 			set
@@ -47,15 +48,17 @@ namespace justownitRiders.ViewModels
 			}
 		}
 
-		private bool canDeliver = true;
-		public bool CanDeliver
+		private int availableDelivery;
+		public int AvailableDelivery
 		{
-			get { return canDeliver; }
+			get { return availableDelivery; }
 			set
 			{
-				canDeliver = value;
+				availableDelivery = value;
 				OnPropertyChanged();
+
 			}
+
 		}
 
 		private bool canMark = false;
@@ -69,7 +72,7 @@ namespace justownitRiders.ViewModels
 			}
 		}
 
-		private bool isRefreshing;
+		private bool isRefreshing = false;
 		public bool IsRefreshing
 		{
 			get { return isRefreshing; }
@@ -86,10 +89,63 @@ namespace justownitRiders.ViewModels
 		public ICommand MarkDeliveryCommand => new Command(MarkDelivery);
 
 
-		private async Task<ObservableCollection<RiderDeliveryRequestsResponse>> GetDeliverableRequest()
+		//private async Task<ObservableCollection<RiderDeliveryRequestsResponse>> GetDeliverableRequest()
+		//{
+		//	IsRefreshing = true;
+		//	ObservableCollection<RiderDeliveryRequestsResponse> myRequests = new ObservableCollection<RiderDeliveryRequestsResponse>();
+		//	var manager = new ApiManager();
+		//	UserDialogs.Instance.ShowLoading("Loading");
+		//	var RiderRequestResponseTuple = await manager.GetRiderDeliverables();
+		//	var RiderDeliveryRequestsResponse = RiderRequestResponseTuple.Item1;
+		//	int statusCode = RiderRequestResponseTuple.Item3;
+		//	if (statusCode == 200)
+		//	{
+		//		var rawRequest = JsonConvert.DeserializeObject<DeliverableResponse>(RiderDeliveryRequestsResponse);
+		//		var RequestArray = rawRequest.data;
+		//		if (RequestArray.Length == 0)
+		//		{
+		//			IsNonFound = true;
+		//			UserDialogs.Instance.HideLoading();
+		//			//await App.Current.MainPage.DisplayAlert("Delivery Error", "There are no deliveries to be made", "OK");
+		//		}
+		//		else
+		//		{
+		//			var riders = new List<Test>();
+					
+		//			foreach (var item in RequestArray)
+		//			{
+		//				riders.Add(new Test()
+		//				{
+		//					canDeliver = item.dispatchStatus.Equals("en-route") ? true : false,
+		//					canMark = item.dispatchStatus.Equals("ready-for-delivery") ? true : false,
+		//					ridersRequestModel = item,
+		//				});
+						
+		//			}
+		//			//ObservableCollection<RiderDeliveryRequestsResponse> requestList = new ObservableCollection<RiderDeliveryRequestsResponse>(RequestArray);
+		//			ObservableCollection<Test> requestList = new ObservableCollection<Test>(riders.ToArray());
+		//			myRequests = requestList;
+		//			UserDialogs.Instance.HideLoading();
+
+		//		}
+		//	}
+		//	else
+		//	{
+		//		IsNonFound = true;
+		//		//await App.Current.MainPage.DisplayAlert("Delivery Error", "There are no deliveries to be made", "OK");
+		//		UserDialogs.Instance.HideLoading();
+		//	}
+		//	AvailableDelivery = myRequests.Count;
+		//	IsRefreshing = false;
+		//	return myRequests;
+
+		//}
+
+
+		private async Task<ObservableCollection<Test>> GetDeliverableRequest()
 		{
 			IsRefreshing = true;
-			ObservableCollection<RiderDeliveryRequestsResponse> myRequests = new ObservableCollection<RiderDeliveryRequestsResponse>();
+			ObservableCollection<Test> myRequests = new ObservableCollection<Test>();
 			var manager = new ApiManager();
 			UserDialogs.Instance.ShowLoading("Loading");
 			var RiderRequestResponseTuple = await manager.GetRiderDeliverables();
@@ -101,14 +157,26 @@ namespace justownitRiders.ViewModels
 				var RequestArray = rawRequest.data;
 				if (RequestArray.Length == 0)
 				{
-					await App.Current.MainPage.DisplayAlert("Delivery Error", "There are no deliveries to be made", "OK");
 					IsNonFound = true;
 					UserDialogs.Instance.HideLoading();
-
+					//await App.Current.MainPage.DisplayAlert("Delivery Error", "There are no deliveries to be made", "OK");
 				}
 				else
 				{
-					ObservableCollection<RiderDeliveryRequestsResponse> requestList = new ObservableCollection<RiderDeliveryRequestsResponse>(RequestArray);
+					var riders = new List<Test>();
+
+					foreach (var item in RequestArray)
+					{
+						riders.Add(new Test()
+						{
+							canDeliver = item.dispatchStatus.Equals("en-route") ? true : false,
+							canAccept = item.dispatchStatus.Equals("ready-for-delivery") ? true : false,
+							ridersRequestModel = item,
+						});
+
+					}
+					//ObservableCollection<RiderDeliveryRequestsResponse> requestList = new ObservableCollection<RiderDeliveryRequestsResponse>(RequestArray);
+					ObservableCollection<Test> requestList = new ObservableCollection<Test>(riders.ToArray());
 					myRequests = requestList;
 					UserDialogs.Instance.HideLoading();
 
@@ -117,9 +185,10 @@ namespace justownitRiders.ViewModels
 			else
 			{
 				IsNonFound = true;
-				await App.Current.MainPage.DisplayAlert("Delivery Error", "There are no deliveries to be made", "OK");
+				//await App.Current.MainPage.DisplayAlert("Delivery Error", "There are no deliveries to be made", "OK");
 				UserDialogs.Instance.HideLoading();
 			}
+			AvailableDelivery = myRequests.Count;
 			IsRefreshing = false;
 			return myRequests;
 
@@ -128,8 +197,8 @@ namespace justownitRiders.ViewModels
 
 		public async void AcceptDelivery(object delivery)
 		{
-			var selectedDeliverable = (RiderDeliveryRequestsResponse)delivery;
-			int request_id = selectedDeliverable.id;
+			var selectedDeliverable = (Test)delivery;
+			int request_id = selectedDeliverable.ridersRequestModel.id;
 			var manager = new ApiManager();
 			UserDialogs.Instance.ShowLoading("Loading");
 			var request = await manager.AcceptDelivery(request_id);
@@ -149,10 +218,9 @@ namespace justownitRiders.ViewModels
 			}
 			else if (acceptResponse.status == 200)
 			{
-				CanDeliver = false;
-				CanMark = true;
 				UserDialogs.Instance.HideLoading();
 				await App.Current.MainPage.DisplayAlert("Successful", "Request Accepted", "OK");
+				LoadDeliveries();
 			}
 			else
 			{
@@ -163,8 +231,8 @@ namespace justownitRiders.ViewModels
 
 		private async void MarkDelivery(object delivery)
 		{
-			var selectedDeliverable = (RiderDeliveryRequestsResponse)delivery;
-			int request_id = selectedDeliverable.id;
+			var selectedDeliverable = (Test)delivery;
+			int request_id = selectedDeliverable.ridersRequestModel.id;
 			var manager = new ApiManager();
 			UserDialogs.Instance.ShowLoading("Loading");
 			var request = await manager.MarkAsDelivered(request_id);
@@ -186,6 +254,7 @@ namespace justownitRiders.ViewModels
 			{
 				UserDialogs.Instance.HideLoading();
 				await App.Current.MainPage.DisplayAlert("Successful", "Marked As Delivered", "OK");
+				LoadDeliveries();
 			}
 			else
 			{

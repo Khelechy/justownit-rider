@@ -47,7 +47,7 @@ namespace justownitRiders.ViewModels
 			}
 		}
 
-		private bool isRefreshing;
+		private bool isRefreshing = false;
 		public bool IsRefreshing
 		{
 			get { return isRefreshing; }
@@ -56,6 +56,18 @@ namespace justownitRiders.ViewModels
 				isRefreshing = value;
 				OnPropertyChanged();
 			}
+		}
+
+		private int availableDelivery;
+		public int AvailableDelivery
+		{
+			get { return availableDelivery; }
+			set
+			{
+				availableDelivery = value;
+				OnPropertyChanged();
+			}
+
 		}
 
 
@@ -77,7 +89,7 @@ namespace justownitRiders.ViewModels
 				var RequestArray = rawRequest.data;
 				if (RequestArray.Length == 0)
 				{
-					await App.Current.MainPage.DisplayAlert("Delivery Error", "You have made no delivery", "OK");
+					//await App.Current.MainPage.DisplayAlert("Delivery Error", "You have made no delivery", "OK");
 					IsNonFound = true;
 					UserDialogs.Instance.HideLoading();
 
@@ -93,9 +105,10 @@ namespace justownitRiders.ViewModels
 			else
 			{
 				IsNonFound = true;
-				await App.Current.MainPage.DisplayAlert("Delivery Error", "You have made no delivery", "OK");
+				//await App.Current.MainPage.DisplayAlert("Delivery Error", "You have made no delivery", "OK");
 				UserDialogs.Instance.HideLoading();
 			}
+			AvailableDelivery = myRequests.Count;
 			IsRefreshing = false;
 			return myRequests;
 
